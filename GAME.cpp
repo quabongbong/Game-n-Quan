@@ -73,7 +73,81 @@ void hienThi(){
 }
 void ingame(){
 	khungTroChoi();
-	state = 10;
+	hienThi();
+	int x, y, oDuocChon;
+	if(khbit()){
+		int key = getch();
+		switch(key){
+			case 49:
+				x = 0; y = 1;
+				soSoi[x][y] = 0;
+				break;
+			case 50:
+				x = 0; y = 2;
+				soSoi[x][y] = 0;
+				break;
+			case 51:
+				x = 0; y = 3;
+				soSoi[x][y] = 0;
+				break;
+			case 52:
+				x = 0; y = 4;
+				soSoi[x][y] = 0;
+				break;
+			case 53:
+				x = 0; y = 5;
+				soSoi[x][y] = 0;
+				break;
+			case 97:
+				x = 1; y = 1;
+				soSoi[x][y] = 0;
+				break;
+			case 98:
+				x = 1; y = 2;
+				soSoi[x][y] = 0;
+				break;
+			case 99:
+				x = 1; y = 3;
+				soSoi[x][y] = 0;
+				break;
+			case 100:
+				x = 1; y = 4;
+				soSoi[x][y] = 0;
+				break;
+			case 101:
+				x = 1; y = 5;
+				soSoi[x][y] = 0;
+				break;
+			case 75:
+				for(y-1; y>=0; y--){
+				      soSoi[j][x] ++;
+				      oDuocChonj --;
+				}
+				if(oDuocChon != 0){
+					int k = oDuocChon;
+					if(x == 0) x =1;
+					else x=0;
+					for(y=0; y<k; y++){
+						soSoi[j][x] ++;
+					}
+				}
+				break;
+			case 77:
+				for(y+1; y<=6; y++){
+				      soSoi[j][x] ++;
+				      oDuocChonj --;
+				}
+				if(oDuocChon != 0){
+					int k = oDuocChon;
+					if(x == 0) x =1;
+					else x=0;
+					for(y=6; y>6-k; y--){
+						soSoi[j][x] ++;
+					}
+				}
+				break;
+		}
+	}
 }
 void gameover(){
 	
