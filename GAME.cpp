@@ -2,7 +2,7 @@
 #include<windows.h>
 #include<conio.h>
 
-enum state {INGAME = 0, GAMEOVER} state;
+enum state {INGAME = 0, MENU, GAMEOVER} state;
 
 //tao ham gotoxy
 void gotoxy(int x, int y){
@@ -47,16 +47,292 @@ void khungTroChoi(){
 		}
 }
 
-//Hien thi tren man hinh
-void hienThi(){
-	int soSoi[2][6];
-    int diemSo[2] = {0,0};
-    for(int i = 0; i<2; i++){
-    	for(int j = 0; j<6; j++){
-    		if(j == 0) soSoi[i][j] = 10;
-    		else soSoi[i][j] = 5;
+//cac buoc di
+void phai1(int a[2][6], int j, int k){
+	int x =1;
+	a[1][j]=0;
+	for(int i=j+1; i<6; i++){
+		a[1][i]++;
+		k--;
+		if(k==0) break;
+	}
+}
+void phai0(int a[2][6], int j, int k){
+	int x=0;
+	a[0][j]=0;
+	for(int i =j+1; i<6; i++){
+		a[0][i]++;
+		k--;
+		if(k==0) break;
+	}
+}
+void trai1(int a[2][6], int j, int k){
+	a[1][j]=0;
+	int x=1;
+	for(int i = j-1; i>=0; i--){
+		a[1][i]++;
+		k--;
+		if(k==0) break;
+	}
+}
+void trai0(int a[2][6], int j, int k){
+	int x=0;
+	a[0][j]=0;
+	for(int i = j-1; i>=0; i--){
+		a[1][i]++;
+		k--;
+		if(k==0) break;
+	}
+}
+void chuyenLuotT(int a[2][6], int b[2], int player, int x, int y){
+	if(a[x][y-1] == 0 && y!= 0){
+		if(a[x][y-2] != 0){
+			b[player] += a[x][y-2];
 		}
 	}
+	else if(a[x][y-1] == 0 && y== 1){
+		if(x == 0) x =1;
+		else x = 0;
+		if(a[x][y-2] != 0 && y == 1){
+			b[player] += a[x][1];
+		}
+	}
+}
+void chuyenLuotP(int a[2][6], int b[2], int player, int x, int y){
+	if(a[x][y+1] == 0 && y!= 5){
+		if(a[x][y+2] != 0){
+			b[player] += a[x][y+2];
+		}
+	}
+	else if(a[x][y+1] == 0 && y== 5){
+		if(x == 0) x =1;
+		else x = 0;
+		if(a[x][y+2] != 0 && y == 5){
+			b[player] += a[x][5];
+		}
+	}
+}
+void nguoi1(int arr[2][6], int b[2]){
+	int oDuocChon, player = 1, k1, k2, x, huongDi;
+	int soSoiODC = arr[1][oDuocChon];
+	if(kbhit()){
+	huongDi = getch();
+	}
+	switch(huongDi){
+	case 48:
+		x=1;
+		oDuocChon = 0;
+		trai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			phai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	    break;
+	case 49:
+		x=1;
+		oDuocChon = 1;
+		trai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			phai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	    break;
+	case 50:
+		x=1;
+		oDuocChon = 2;
+		trai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			phai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	    break;
+	case 51:
+		x=1;
+		oDuocChon = 3;
+		trai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			phai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	    break;
+	case 52:
+		x=1;
+		oDuocChon = 4;
+		trai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			phai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	    break;
+	case 53:
+		x=1;
+		oDuocChon = 1;
+		trai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			phai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	    break;
+	case 54:
+		x=1;
+		oDuocChon =2;
+		phai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			trai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+		break;
+	case 55:
+		x=1;
+		oDuocChon =3;
+		phai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			trai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+		break;
+	case 56:
+		x=1;
+		oDuocChon =4;
+		phai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			trai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	case 57:
+		x=1;
+		oDuocChon =5;
+		phai1(arr, oDuocChon, soSoiODC);
+		if(
+		soSoiODC!=0){
+			x=0;
+			trai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	break;		
+	}
+}
+void nguoi2(int arr[2][6], int b[2]){
+	int oDuocChon, player = 1, k1, k2, x, huongDi;
+	int soSoiODC = arr[1][oDuocChon];
+	if(kbhit()){
+	huongDi = getch();
+	}
+	switch(huongDi){
+	case 48:
+		x=0;
+		oDuocChon = 0;
+		trai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			phai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	    break;
+	case 49:
+		x=0;
+		oDuocChon = 1;
+		trai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			phai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	    break;
+	case 50:
+		x=0;
+		oDuocChon = 2;
+		trai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			phai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	    break;
+	case 51:
+		x=0;
+		oDuocChon = 3;
+		trai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			phai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	    break;
+	case 52:
+		x=0;
+		oDuocChon = 4;
+		trai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			phai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	    break;
+	case 53:
+		x=0;
+		oDuocChon = 1;
+		trai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			phai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	    break;
+	case 54:
+		x=0;
+		oDuocChon =2;
+		phai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			trai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+		break;
+	case 55:
+		x=0;
+		oDuocChon =3;
+		phai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			trai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+		break;
+	case 56:
+		x=0;
+		oDuocChon =4;
+		phai1(arr, oDuocChon, soSoiODC);
+		if(soSoiODC!=0){
+			x=0;
+			trai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	case 57:
+		x=0;
+		oDuocChon =5;
+		phai1(arr, oDuocChon, soSoiODC);
+		if(
+		soSoiODC!=0){
+			x=0;
+			trai0(arr, oDuocChon, soSoiODC);
+		}
+		else chuyenLuotT(arr, b, player, x, oDuocChon);
+	break;		
+	}
+}
+
+//hien thi tren man hinh
+void hienThi(int soSoi[2][6], int diemSo[2]){	
 	for(int j =0; j<6; j++){
 		if(j==0){
 			gotoxy(5, 4); printf("%d", soSoi[0][0]);
@@ -72,94 +348,62 @@ void hienThi(){
     gotoxy(0, 10); printf("Nguoi choi 1: %d\nNguoi choi 2: %d", diemSo[0], diemSo[1]);
 }
 void ingame(){
-	khungTroChoi();
-	hienThi();
-	int x, y, oDuocChon;
-	if(khbit()){
-		int key = getch();
-		switch(key){
-			case 49:
-				x = 0; y = 1;
-				soSoi[x][y] = 0;
-				break;
-			case 50:
-				x = 0; y = 2;
-				soSoi[x][y] = 0;
-				break;
-			case 51:
-				x = 0; y = 3;
-				soSoi[x][y] = 0;
-				break;
-			case 52:
-				x = 0; y = 4;
-				soSoi[x][y] = 0;
-				break;
-			case 53:
-				x = 0; y = 5;
-				soSoi[x][y] = 0;
-				break;
-			case 97:
-				x = 1; y = 1;
-				soSoi[x][y] = 0;
-				break;
-			case 98:
-				x = 1; y = 2;
-				soSoi[x][y] = 0;
-				break;
-			case 99:
-				x = 1; y = 3;
-				soSoi[x][y] = 0;
-				break;
-			case 100:
-				x = 1; y = 4;
-				soSoi[x][y] = 0;
-				break;
-			case 101:
-				x = 1; y = 5;
-				soSoi[x][y] = 0;
-				break;
-			case 75:
-				for(y-1; y>=0; y--){
-				      soSoi[j][x] ++;
-				      oDuocChonj --;
-				}
-				if(oDuocChon != 0){
-					int k = oDuocChon;
-					if(x == 0) x =1;
-					else x=0;
-					for(y=0; y<k; y++){
-						soSoi[j][x] ++;
-					}
-				}
-				break;
-			case 77:
-				for(y+1; y<=6; y++){
-				      soSoi[j][x] ++;
-				      oDuocChonj --;
-				}
-				if(oDuocChon != 0){
-					int k = oDuocChon;
-					if(x == 0) x =1;
-					else x=0;
-					for(y=6; y>6-k; y--){
-						soSoi[j][x] ++;
-					}
-				}
-				break;
+	khungTroChoi();	
+	int soSoi[2][6];
+
+	for(int i = 0; i<2; i++){
+    	for(int j = 0; j<6; j++){
+    		if(j == 0) soSoi[i][j] = 10;
+    		else soSoi[i][j] = 5;
 		}
 	}
+    int diemSo[2] = {0,0};
+    hienThi(soSoi, diemSo);
+    int c1, c2;
+    
+    
+//main
+    while(1){
+		if(soSoi[1][0] == 0 | soSoi[0][6] == 0) break;
+		nguoi1(soSoi, diemSo);
+		hienThi(soSoi, diemSo);
+		for(int i; i<6; i++){
+			c1+= soSoi[1][i];
+		}
+		if(c1==0) break;
+		if(soSoi[1][0] == 0 | soSoi[0][6] == 0) break;
+		nguoi2(soSoi, diemSo);
+		hienThi(soSoi, diemSo);
+		for(int i; i<6; i++){
+			c2+= soSoi[0][i];
+		}
+		if(c2==0) break;
 }
-void gameover(){
+}
+
+void gameover(int d[2]){
+	gotoxy(10, 5);
+	printf("Game Over!\n");
+	if(d[0]> d[1]) printf("Player 1 Win");
+	else printf("Player 2 Win");
+}
+
+void menu(){
 	
 }
+
 int main(){
+	int diemSo[2];
 	while(1){
 		switch(state){
+			case MENU:
+				menu();
+				break;
 			case INGAME:
 				ingame();
 				break;
 			case GAMEOVER:
-				gameover();
+				gameover(diemSo);
 				break;
 		}
 		}
